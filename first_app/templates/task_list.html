@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid" style="width:50%; margin:auto;">
+  <h1 class="text-center" style="background-color:#4C0099;color:white;width:500px; border-radius:10px;margin-left:140px;margin-top:80px;padding:5px;font-weight:bold">Tasks</h1>
+    {% if data %}
+    <table class="table table-bordered text-center border-black mt-5">
+        <thead>
+          <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th> 
+          </tr>
+        </thead>
+        <tbody>
+          {% for task in data %}
+          {% if task.is_completed == False %}
+          <tr>
+            <td>{{task.task_title}}</td>
+            <td>{{task.task_description}}</td>
+            <td>Incomplete</td>
+            <td><a href="{% url 'deleteTask' pk=task.id %}" class="btn btn-danger btn-sm me-2">Delete</a>
+                <a href="{% url 'editTask' pk=task.id %}" class="btn btn-primary btn-sm">Edit</a>
+                <a href="{% url 'completedTask' pk=task.id %}" class="btn btn-sm me-2" style="background-color:green;color:white;">Complete</a></td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+    <h1>There are no Books available</h1>
+    {% endif %}
+</div>
+{% endblock %}
